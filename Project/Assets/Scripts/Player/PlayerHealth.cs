@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
 
     Animator animator;
     PlayerMovement playerMovement;
+	PlayerShooting playerShooting;  
     bool isDead;
     bool damaged;
 
@@ -18,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         playerMovement = GetComponentInChildren<PlayerMovement>();
+		playerShooting = GetComponentInChildren <PlayerShooting> ();
         currentHealth = health;
     }
 
@@ -46,6 +48,7 @@ public class PlayerHealth : MonoBehaviour
     public void Death()
     {
         isDead = true;
+		playerShooting.DisableEffects ();
         animator.SetTrigger("Die");
         playerMovement.enabled = false;
     }

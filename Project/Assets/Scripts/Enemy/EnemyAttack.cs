@@ -8,17 +8,17 @@ public class EnemyAttack : MonoBehaviour {
     Animator anim;
     GameObject player;
     PlayerHealth playerHealth;
+	EnemyHealth enemyHealth; 
     bool inRange;
     float timer;
 
-	// Use this for initialization
 	void Awake () {
         player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<PlayerHealth>();
+		enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
 	}
-	
-	// Update is called once per frame
+
 	void OnTriggerEnter (Collider collide) {
 	    if (collide.gameObject == player)
         {
@@ -37,7 +37,7 @@ public class EnemyAttack : MonoBehaviour {
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks && inRange)
+		if (timer >= timeBetweenAttacks && inRange && enemyHealth.currentHealth > 0)
         {
             Attack();
         }
