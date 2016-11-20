@@ -146,7 +146,7 @@ public class WaveManager : MonoBehaviour {
 		}
 
 		// on a passé tout les checks donc on spawn
-		GameObject enemy =  Instantiate(element.enemy, spawnPosition, Quaternion.identity) as GameObject;
+		GameObject enemy =  (GameObject) Instantiate(element.enemy, spawnPosition, Quaternion.identity);
 		// Augmente la santé de l'ennemi en fonction de la difficulté
 		enemy.GetComponent<EnemyHealth>().startingHealth *= difficulty;
 		//enemy.GetComponent<EnemyHealth>().scoreValue *= difficulty;
