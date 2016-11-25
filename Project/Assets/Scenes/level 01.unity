@@ -256,6 +256,11 @@ Prefab:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 199000013271718236, guid: 6928391d97f65224c84a5816f7960d21,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ea139d3981b05664a83edf17caaac510, type: 2}
     m_RemovedComponents:
     - {fileID: 114000011898135674, guid: 6928391d97f65224c84a5816f7960d21, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6928391d97f65224c84a5816f7960d21, type: 2}
@@ -528,23 +533,17 @@ MonoBehaviour:
   waves:
   - elements:
     - enemy: {fileID: 1000010250942376, guid: fc4b9366e7506b349b710cbc12a0b3a1, type: 2}
-      ennemyCount: 1
+      ennemyCount: 20
     - enemy: {fileID: 100000, guid: 7bca9c2cd581dbb4f971ad087c21f5f9, type: 2}
-      ennemyCount: 1
+      ennemyCount: 20
   - elements:
     - enemy: {fileID: 1000010250942376, guid: fc4b9366e7506b349b710cbc12a0b3a1, type: 2}
       ennemyCount: 10
     - enemy: {fileID: 100000, guid: 7bca9c2cd581dbb4f971ad087c21f5f9, type: 2}
-      ennemyCount: 10
+      ennemyCount: 50
   - elements:
     - enemy: {fileID: 100002, guid: 7bca9c2cd581dbb4f971ad087c21f5f9, type: 2}
-      ennemyCount: 20
-  - elements:
-    - enemy: {fileID: 100000, guid: 7bca9c2cd581dbb4f971ad087c21f5f9, type: 2}
-      ennemyCount: 30
-  - elements:
-    - enemy: {fileID: 100000, guid: 7bca9c2cd581dbb4f971ad087c21f5f9, type: 2}
-      ennemyCount: 40
+      ennemyCount: 100
 --- !u!4 &1030640725 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000013009817766, guid: 6928391d97f65224c84a5816f7960d21,
