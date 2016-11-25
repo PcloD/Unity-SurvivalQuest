@@ -38,7 +38,8 @@ public class PlayerHealth : MonoBehaviour
         damaged = true;
         currentHealth -= damage;
         healthSlider.value = currentHealth;
-
+        
+          
         if (currentHealth <= 0 && !isDead)
         {
             Death();

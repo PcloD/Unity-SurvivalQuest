@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour {
 
@@ -19,7 +20,7 @@ public class GameOverManager : MonoBehaviour {
             restartTimer += Time.deltaTime;
 
             if (restartTimer >= restartDelay) {
-                Application.LoadLevel(Application.loadedLevel);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }
