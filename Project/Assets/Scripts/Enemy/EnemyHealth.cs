@@ -5,7 +5,8 @@ public class EnemyHealth : MonoBehaviour
 	public int startingHealth = 100;            
 	public int currentHealth;                   
 	public float sinkSpeed = 2.5f;             
-	public int scoreValue = 10;                               
+	public int scoreValue = 10;
+    public WaveManager waveManager;                            
 
 
 	Animator anim;                                             
@@ -20,8 +21,8 @@ public class EnemyHealth : MonoBehaviour
 		anim = GetComponent <Animator> ();
 		hitParticles = GetComponentInChildren <ParticleSystem> ();
 		capsuleCollider = GetComponent <CapsuleCollider> ();
-
-		currentHealth = startingHealth;
+        waveManager = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+        currentHealth = startingHealth;
 	}
 
 	void Update ()
@@ -59,7 +60,9 @@ public class EnemyHealth : MonoBehaviour
 
 		anim.SetTrigger ("Dead");
 
-	}
+        waveManager.enemiesAlive--;
+
+    }
 
 
 	public void StartSinking ()
