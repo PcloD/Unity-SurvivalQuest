@@ -18,7 +18,6 @@ public class HellephantBullet : MonoBehaviour {
 	Vector3 direction;
 	bool hasHit = false;
 	RaycastHit lastHit;
-	// Reference to the audio source.
 	float timer;
 
 	void Awake() {
@@ -28,7 +27,6 @@ public class HellephantBullet : MonoBehaviour {
 		newPos = transform.position;
 		oldPos = newPos;
 
-		// Set our particle colors.
 		normalTrailParticles.startColor = bulletColor;
 		ImpactParticles.startColor = bulletColor;
 		normalTrailParticles.gameObject.SetActive(true);
@@ -38,11 +36,9 @@ public class HellephantBullet : MonoBehaviour {
 		if (hasHit) {
 			return;
 		}
-
-		// Add the time since Update was last called to the timer.
+			
 		timer += Time.deltaTime;
 
-		// Schedule for destruction if bullet never hits anything.
 		if (timer >= life) {
 			Dissipate();
 		}
@@ -51,25 +47,21 @@ public class HellephantBullet : MonoBehaviour {
 		//velocity.y = 0;
 		velocity = velocity.normalized * speed;
 
-		// assume we move all the way
 		newPos += velocity * Time.deltaTime;
 	
-		// Check if we hit anything on the way
 		direction = newPos - oldPos;
 		float distance = direction.magnitude;
 
 		if (distance > 0) {
             RaycastHit[] hits = Physics.RaycastAll(oldPos, direction, distance);
 
-		    // Find the first valid hit
 		    for (int i = 0; i < hits.Length; i++) {
 		        RaycastHit hit = hits[i];
 
 				if (ShouldIgnoreHit(hit)) {
 					continue;
 				}
-
-				// notify hit
+					
 				OnHit(hit);
 
 				lastHit = hit;
@@ -85,11 +77,6 @@ public class HellephantBullet : MonoBehaviour {
 		transform.position = newPos;
 	}
 
-	/**
-	 * So we don't hit the same enemy twice with the same raycast when we have
-	 * piercing shots. The shot can still bounce on a wall, come back and hit
-	 * the enemy again if we have both bouncing and piercing shots.
-	 */
 	bool ShouldIgnoreHit (RaycastHit hit) {
 		if (lastHit.point == hit.point || lastHit.collider == hit.collider || hit.collider.tag == "Enemy")
 			return true;
@@ -97,9 +84,7 @@ public class HellephantBullet : MonoBehaviour {
 		return false;
 	}
 
-	/**
-	 * Figure out what to do when we hit something.
-	 */
+
 	void OnHit(RaycastHit hit) {
         Quaternion rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
@@ -117,24 +102,16 @@ public class HellephantBullet : MonoBehaviour {
 			ImpactParticles.transform.rotation = rotation;
 			ImpactParticles.Play();
 
-			// Try and find an EnemyHealth script on the gameobject hit.
 			PlayerHealth playerHealth = hit.collider.GetComponent<PlayerHealth>();
-			
-			// If the EnemyHealth component exist...
+
 			if (playerHealth != null) {
-				// ... the enemy should take damage.
 				playerHealth.TakeDamage(damage);
 			}
     		hasHit = true;
 			DelayedDestroy();
         }
 	}
-
-	// Just a method for destroying the game object, but which
-	// first detaches the particle effect and leaves it for a
-	// second. Called if the bullet end its life in midair
-	// so we get an effect of the bullet fading out instead
-	// of disappearing immediately.
+		
 	void Dissipate() {
 		normalTrailParticles.enableEmission = false;
 		normalTrailParticles.transform.parent = null;

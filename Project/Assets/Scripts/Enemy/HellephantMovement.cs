@@ -23,7 +23,6 @@ public class HellephantMovement : MonoBehaviour {
 	}
 	
 	void Update() {
-		// If this enemy is alive.
 		if (enemyHealth.currentHealth > 0) {
 			if (playerHealth.currentHealth > 0) {
 				Rotate();
@@ -33,7 +32,6 @@ public class HellephantMovement : MonoBehaviour {
 				}
 			}
 		}
-		// Otherwise...
 		else {
 			myRenderer.materials[1].SetColor("_RimColor", Color.Lerp(myRenderer.materials[1].GetColor("_RimColor"), new Color(0, 0, 0, 1), 2 * Time.deltaTime));
 		}
