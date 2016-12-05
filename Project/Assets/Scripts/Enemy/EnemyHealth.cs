@@ -6,7 +6,8 @@ public class EnemyHealth : MonoBehaviour
 	public int currentHealth;                   
 	public float sinkSpeed = 2.5f;             
 	public int scoreValue = 10;
-    public WaveManager waveManager;                            
+    public WaveManager waveManager;
+    public ScoreManager scoreManager;                       
 
 
 	Animator anim;                                             
@@ -22,6 +23,7 @@ public class EnemyHealth : MonoBehaviour
 		hitParticles = GetComponentInChildren <ParticleSystem> ();
 		capsuleCollider = GetComponent <CapsuleCollider> ();
         waveManager = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         currentHealth = startingHealth;
 	}
 
@@ -59,7 +61,7 @@ public class EnemyHealth : MonoBehaviour
 		capsuleCollider.isTrigger = true;
 
 		anim.SetTrigger ("Dead");
-
+        scoreManager.AddScore(scoreValue);
         waveManager.enemiesAlive--;
 
     }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Linq;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
 	PlayerShooting playerShooting;  
     bool isDead;
     bool damaged;
+    public Text healthText;
 
     void Awake()
     {
@@ -21,14 +22,15 @@ public class PlayerHealth : MonoBehaviour
         playerMovement = GetComponentInChildren<PlayerMovement>();
 		playerShooting = GetComponentInChildren <PlayerShooting> ();
         currentHealth = health;
+        healthText.text = health.ToString();
     }
 
     void Update()
     {
-        if (damaged)
+        if (damaged && currentHealth <= health/3)
         {
-            //var fill = (healthSlider as UnityEngine.UI.Slider).GetComponentsInChildren<UnityEngine.UI.Image>();
-            //fill.color = Color.Lerp(Color.red, Color.green, 0.5);
+            var fill = (healthSlider as UnityEngine.UI.Slider).GetComponentsInChildren<UnityEngine.UI.Image>().FirstOrDefault(t => t.name == "Fill");
+            fill.color = Color.Lerp(Color.red, fill.color, 0.5f);
 
         }
     }
@@ -38,8 +40,9 @@ public class PlayerHealth : MonoBehaviour
         damaged = true;
         currentHealth -= damage;
         healthSlider.value = currentHealth;
-        
-          
+        healthText.text = currentHealth.ToString();
+
+
         if (currentHealth <= 0 && !isDead)
         {
             Death();
