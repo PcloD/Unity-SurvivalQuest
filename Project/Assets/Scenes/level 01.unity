@@ -833,7 +833,7 @@ MonoBehaviour:
     - enemy: {fileID: 100000, guid: 7bca9c2cd581dbb4f971ad087c21f5f9, type: 2}
       ennemyCount: 20
   - elements:
-    - enemy: {fileID: 1000010250942376, guid: fc4b9366e7506b349b710cbc12a0b3a1, type: 2}
+    - enemy: {fileID: 100000, guid: 41b8a18552c5dea4bb9137409fc967f0, type: 2}
       ennemyCount: 10
     - enemy: {fileID: 100000, guid: 7bca9c2cd581dbb4f971ad087c21f5f9, type: 2}
       ennemyCount: 50
