@@ -14,12 +14,11 @@ public class EnemyHealth : MonoBehaviour
     GameObject enemyHealthbarManager;
     Slider sliderInstance;
 
-
     Animator anim;                                             
 	ParticleSystem hitParticles;                
-	CapsuleCollider capsuleCollider;            
-	bool isDead;                                
-	bool isSinking;
+	CapsuleCollider capsuleCollider;
+    SkinnedMeshRenderer myRenderer;
+    bool isDead;                                
     public ParticleSystem deathParticles;                        
 
 
@@ -28,6 +27,7 @@ public class EnemyHealth : MonoBehaviour
 		anim = GetComponent <Animator> ();
 		hitParticles = GetComponentInChildren <ParticleSystem> ();
 		capsuleCollider = GetComponent <CapsuleCollider> ();
+        myRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         enemyHealthbarManager = GameObject.Find("EnemyHealthbarsCanvas");
         waveManager = GameObject.Find("WaveManager").GetComponent<WaveManager>();
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
@@ -45,18 +45,13 @@ public class EnemyHealth : MonoBehaviour
     }
 
 
-    void Update ()
-	{
-		if(isSinking)
-		{
-			transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
-		}
-	}
 
 
-	public void TakeDamage (int amount, Vector3 hitPoint)
+
+    public void TakeDamage (int amount, Vector3 hitPoint)
 	{
-		if(isDead)
+
+        if (isDead)
 			return;
 
 		currentHealth -= amount;
@@ -78,8 +73,9 @@ public class EnemyHealth : MonoBehaviour
 		}
 	}
 
+ 
 
-	void Death ()
+    void Death ()
 	{
 		isDead = true;
 
@@ -102,7 +98,6 @@ public class EnemyHealth : MonoBehaviour
 	IEnumerator StartSinking ()
 	{
         yield return new WaitForSeconds(2);
-        isSinking = true;
         deathParticles.Play();
 		Destroy (gameObject, 2f);
 	}
