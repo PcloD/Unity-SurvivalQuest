@@ -12,6 +12,7 @@ public class EnemyHealth : MonoBehaviour
     private WaveManager waveManager;
     public Slider healthBarSlider;
     GameObject enemyHealthbarManager;
+    Slider sliderInstance;
 
 
     Animator anim;                                             
@@ -33,7 +34,18 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = startingHealth;
 	}
 
-	void Update ()
+    void Start()
+    {
+        currentHealth = startingHealth;
+
+        sliderInstance = Instantiate(healthBarSlider, gameObject.transform.position, Quaternion.identity) as Slider;
+        sliderInstance.gameObject.transform.SetParent(enemyHealthbarManager.transform, false);
+        sliderInstance.GetComponent<Healthbar>().enemy = gameObject;
+        sliderInstance.gameObject.SetActive(false);
+    }
+
+
+    void Update ()
 	{
 		if(isSinking)
 		{
@@ -53,7 +65,14 @@ public class EnemyHealth : MonoBehaviour
 
 		hitParticles.Play();
 
-		if(currentHealth <= 0)
+        if (currentHealth <= startingHealth)
+        {
+            sliderInstance.gameObject.SetActive(true);
+        }
+        int sliderValue = (int)Mathf.Round(((float)currentHealth / (float)startingHealth) * 100);
+        sliderInstance.value = sliderValue;
+
+        if (currentHealth <= 0)
 		{
 			Death ();
 		}
@@ -75,6 +94,7 @@ public class EnemyHealth : MonoBehaviour
         waveManager.enemiesAlive--;
         capsuleCollider.isTrigger = true;
         StartCoroutine(StartSinking());
+        Destroy(sliderInstance.gameObject);
 
     }
 
@@ -82,6 +102,7 @@ public class EnemyHealth : MonoBehaviour
 	IEnumerator StartSinking ()
 	{
         yield return new WaitForSeconds(2);
+        isSinking = true;
         deathParticles.Play();
 		Destroy (gameObject, 2f);
 	}
